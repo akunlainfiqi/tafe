@@ -1,4 +1,4 @@
-import { Bills } from "@/app/bills/columns";
+import { Bills } from "@/app/dashboard/bills/columns";
 import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
 
