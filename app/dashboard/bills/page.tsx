@@ -25,7 +25,7 @@ export default async function BillsHome() {
           <CardTitle>Bills</CardTitle>
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns} data={data.data} />
+          <DataTable columns={columns} data={data} />
         </CardContent>
       </Card>
     </div>

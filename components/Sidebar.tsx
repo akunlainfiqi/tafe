@@ -37,7 +37,7 @@ const Sidebar = () => {
             <p className="mt-4 mb-2 ml-1 text-muted-foreground">Menu</p>
 
             <Link
-              href="/"
+              href="/dashboard"
               className={cn(
                 pathname !== "/" && "text-muted-foreground",
                 "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary"
@@ -47,9 +47,9 @@ const Sidebar = () => {
             </Link>
 
             <Link
-              href="/bills"
+              href="/dashboard/bills"
               className={cn(
-                pathname !== "/bills" && "text-muted-foreground",
+                pathname !== "/dashboard/bills" && "text-muted-foreground",
                 "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary"
               )}>
               <ReceiptText className="h-4 w-4" />
@@ -57,7 +57,7 @@ const Sidebar = () => {
             </Link>
 
             <Link
-              href={"/transaction"}
+              href={"/dashboard/transaction"}
               className={cn(
                 !pathname.startsWith("/transaction") && "text-muted-foreground",
                 "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary"
