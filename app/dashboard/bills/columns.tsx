@@ -19,8 +19,8 @@ export type Bills = {
   tenantName: string;
   amount: number;
   status: "waiting_payment" | "paid" | "overdue" | "cancelled";
-  dueDate: number;
-  createdAt: number;
+  due_date: number;
+  created_at: number;
 };
 
 export const columns: ColumnDef<Bills>[] = [
@@ -37,14 +37,16 @@ export const columns: ColumnDef<Bills>[] = [
     header: "Status",
   },
   {
-    accessorKey: "dueDate",
+    accessorKey: "due_date",
     header: "Due Date",
-    accessorFn: (row) => new Date(row.dueDate).toLocaleDateString(),
+    accessorFn: (row) =>
+      new Date(row.due_date * 1000).toLocaleDateString("id-ID"),
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "created_at",
     header: "Invoice Date",
-    accessorFn: (row) => new Date(row.createdAt).toLocaleDateString(),
+    accessorFn: (row) =>
+      new Date(row.created_at * 1000).toLocaleDateString("id-ID"),
   },
   {
     id: "actions",
