@@ -3,6 +3,7 @@ import OrganizationProvider from "@/providers/OrganizationProvider";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { Suspense } from "react";
+import Spinner from "@/components/ui/spinner";
 
 export default function Layout({
   children,
@@ -11,10 +12,10 @@ export default function Layout({
 }>) {
   return (
     <div>
-      <Suspense>
+      <Suspense fallback={<Spinner />}>
         <AuthProvider>
           <OrganizationProvider>
-            <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+            <div className="grid min-h-screen max-w screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
               <Sidebar />
               <div className="flex flex-col">
                 <Header />

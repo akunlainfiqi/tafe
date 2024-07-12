@@ -6,12 +6,28 @@ import { useContext } from "react";
 import React from "react";
 import Spinner from "@/components/ui/spinner";
 import { OrganizationContext } from "@/providers/OrganizationProvider";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DataTable } from "@/components/ui/data-table";
+import { tenantsColumns } from "./tenantscolumns";
+import useOrganizationTenants from "@/hooks/useOrganizationTenants";
+import useOrganizationBills from "@/hooks/useOrganizationBills";
+import { billscolumns } from "./billscolumns";
 
 export default function Dashboard() {
   const { userInfo } = useContext(AuthContext);
   const { selectedOrganization, organizations } =
     useContext(OrganizationContext);
-  console.log(organizations.length);
+
+  const {
+    tenants: tenantsdata,
+    mutate,
+    isLoading: tenantIslLoading,
+  } = useOrganizationTenants(selectedOrganization?.organizationId || "");
+  const {
+    bills: billsData,
+    mutate: billsMutate,
+    isLoading: billsIsLoading,
+  } = useOrganizationBills(selectedOrganization?.organizationId || "");
   if (!userInfo) {
     return (
       <div className="flex flex-col min-h-[80vh] items-center justify-center gap-6">
@@ -35,18 +51,42 @@ export default function Dashboard() {
 
   return (
     <main className="flex flex-col gap-4 h-[80vh] ">
-      <div className="flex-col md:flex">
-        <div className="flex-1 space-y-4">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          </div>
-          <h3 className="text-lg font-semibold">
-            Welcome back, {userInfo.name}
-          </h3>
-          <p className="text-sm">
-            Your current organization is {selectedOrganization?.name}
-          </p>
-        </div>
+      <div className="flex-col md:flex gap-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Dashboard</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex-1 space-y-4">
+              <h3 className="text-lg font-semibold">
+                Welcome back, {userInfo.name}
+              </h3>
+              <p className="text-sm">
+                Your current organization is {selectedOrganization?.name}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Tenants</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {tenantIslLoading && <Spinner />}
+            <DataTable columns={tenantsColumns} data={tenantsdata} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Bills</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {billsIsLoading && <Spinner />}
+            <DataTable columns={billscolumns} data={billsData} />
+          </CardContent>
+        </Card>
       </div>
     </main>
   );

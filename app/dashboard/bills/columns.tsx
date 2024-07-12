@@ -9,19 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Bills } from "@/types/bills";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-
-export type Bills = {
-  id: string;
-  organizationId: string;
-  tenantId: string;
-  tenantName: string;
-  amount: number;
-  status: "waiting_payment" | "paid" | "overdue" | "cancelled";
-  due_date: number;
-  created_at: number;
-};
 
 export const columns: ColumnDef<Bills>[] = [
   {

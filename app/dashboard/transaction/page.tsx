@@ -4,16 +4,16 @@ import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 import { useContext } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import useOrganizationBills from "@/hooks/useOrganizationBills";
 import { OrganizationContext } from "@/providers/OrganizationProvider";
+import useOrganizationTransaction from "@/hooks/useOrganizationTransaction";
 
-export default function BillsHome() {
+export default function TransactionsHome() {
   const { selectedOrganization } = useContext(OrganizationContext);
   const {
-    bills: data,
+    transaction: data,
     mutate,
     isLoading,
-  } = useOrganizationBills(selectedOrganization?.organizationId || "");
+  } = useOrganizationTransaction(selectedOrganization?.organizationId || "");
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -22,7 +22,7 @@ export default function BillsHome() {
     <div>
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Bills</CardTitle>
+          <CardTitle className="text-lg">Transactions</CardTitle>
         </CardHeader>
         <CardContent>
           <DataTable columns={columns} data={data} />
