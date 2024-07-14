@@ -12,6 +12,7 @@ import { tenantsColumns } from "./tenantscolumns";
 import useOrganizationTenants from "@/hooks/useOrganizationTenants";
 import useOrganizationBills from "@/hooks/useOrganizationBills";
 import { billscolumns } from "./billscolumns";
+import useOrganizationDetail from "@/hooks/useOrganizationDetail";
 
 export default function Dashboard() {
   const { userInfo } = useContext(AuthContext);
@@ -23,6 +24,12 @@ export default function Dashboard() {
     mutate,
     isLoading: tenantIslLoading,
   } = useOrganizationTenants(selectedOrganization?.organizationId || "");
+
+  const {
+    organization: organizationData,
+    mutate: organizationMutate,
+    isLoading: organizationIsLoading,
+  } = useOrganizationDetail(selectedOrganization?.organizationId || "");
   const {
     bills: billsData,
     mutate: billsMutate,
@@ -63,6 +70,8 @@ export default function Dashboard() {
               </h3>
               <p className="text-sm">
                 Your current organization is {selectedOrganization?.name}
+                <br />
+                Balance : {organizationData.balance}
               </p>
             </div>
           </CardContent>
