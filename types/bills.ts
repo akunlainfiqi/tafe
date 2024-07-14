@@ -1,6 +1,6 @@
 export type Bills = {
   id: string;
-  organizationId: string;
+  organization_id: string;
   tenantId: string;
   tenant_name: string;
   amount: number;

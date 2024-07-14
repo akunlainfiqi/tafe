@@ -9,9 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import fetcher from "@/lib/fetcher";
 import { Bills } from "@/types/bills";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { redirect } from "next/dist/server/api-utils";
 
 export const columns: ColumnDef<Bills>[] = [
   {
@@ -41,7 +43,7 @@ export const columns: ColumnDef<Bills>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -55,9 +57,20 @@ export const columns: ColumnDef<Bills>[] = [
             <DropdownMenuItem onClick={() => {}}>
               Copy payment ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            {row.original.status === "waiting_payment" && (
+              <DropdownMenuItem
+                onClick={() => {
+                  fetcher(
+                    `${process.env.NEXT_PUBLIC_API}/v1/jwt/organizations/${row.original.organization_id}/bills/${row.original.id}/payment`,
+                    "GET"
+                  ).then((res) => {
+                    // console.log(res.data.redirect_url);
+                    window.open(res.data.redirect_url);
+                  });
+                }}>
+                Pay
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );
